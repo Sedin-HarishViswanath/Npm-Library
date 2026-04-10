@@ -1,6 +1,6 @@
 {
   "name": "custom-ts-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript utilities",
   "main": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
