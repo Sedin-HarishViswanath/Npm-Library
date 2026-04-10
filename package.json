@@ -1,7 +1,7 @@
 {
-  "name": "npm-library",
+  "name": "customfunctionlib",
   "version": "1.0.0",
-  "description": "",
+  "description": "TypeScript utilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
@@ -12,6 +12,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "jest": "^30.3.0",
