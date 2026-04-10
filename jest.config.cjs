@@ -8,7 +8,7 @@ module.exports = {
   transform: {
     ...tsJestTransformCfg,
   },
-  roots: ["<rootDir>/tests"],
+  roots: ["<rootDir>/test"],
   collectCoverageFrom: ["src/**/*.ts"],
   coverageThreshold: {
     global: {
