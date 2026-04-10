@@ -84,11 +84,11 @@ Extract values from objects by:
 ```ts
 const rows = [
 	{ id: 1, name: "A", address: { city: "Chennai" } },
-	{ id: 2, name: "B", address: { city: "Pune" } },
+	{ id: 2, name: "B", address: { city: "hyd } },
 ];
 
 pluck("name", rows);            // ["A", "B"]
-pluck("address.city", rows);    // ["Chennai", "Pune"]
+pluck("address.city", rows);    // ["Chennai", "hyd"]
 pluck(["id", "name"], rows);  // [{ id: 1, name: "A" }, { id: 2, name: "B" }]
 ```
 
@@ -96,13 +96,13 @@ pluck(["id", "name"], rows);  // [{ id: 1, name: "A" }, { id: 2, name: "B" }]
 Simple immutable nested read/write helpers.
 
 ```ts
-const user = { profile: { name: "Sam" } };
+const user = { profile: { name: "pugal" } };
 const nameLens = lens("profile.name");
 
-view(nameLens, user); // "Sam"
+view(nameLens, user); // "livi"
 
-const updated = set(nameLens, "Alex", user);
-// updated => { profile: { name: "Alex" } }
+const updated = set(nameLens, "harish", user);
+// updated => { profile: { name: "harish" } }
 // user is unchanged
 ```
 
@@ -110,26 +110,3 @@ const updated = set(nameLens, "Alex", user);
 
 - Package format: ESM only
 - Type declarations included
-
-## Release / versioning (SemVer)
-
-Use these rules before publishing:
-
-- `patch` (`1.0.0 -> 1.0.1`): bug fixes, docs updates, no breaking API change
-- `minor` (`1.0.0 -> 1.1.0`): new backward-compatible function/feature
-- `major` (`1.0.0 -> 2.0.0`): breaking change
-
-Publish steps:
-
-```bash
-npm run build
-npm run test
-npm version patch   # or minor / major
-npm publish
-```
-
-Tip: if this is the first publish for this package name, use:
-
-```bash
-npm publish --access public
-```
