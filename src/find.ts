@@ -7,10 +7,11 @@ export function find<T, K extends keyof T>(
   predicateOrKey: Predicate<T> | K,
   value?: T[K],
 ): T | undefined {
+  //Guard clauses for null and empty array input
   if (!array || array.length === 0) {
     return undefined;
   }
-
+  
   if (typeof predicateOrKey === 'function') {
     for (let index = 0; index < array.length; index += 1) {
       if (predicateOrKey(array[index], index, array)) {

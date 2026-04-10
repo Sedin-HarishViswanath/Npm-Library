@@ -6,70 +6,61 @@ export function lens(path: string): Lens {
   return { path };
 }
 
-function getByPath(value: unknown, path: string): unknown {
-  if (value === null || value === undefined) {
-    return undefined;
-  }
-
-  const parts = path.split('.');
-  let current: unknown = value;
-
-  for (let index = 0; index < parts.length; index += 1) {
-    if (current === null || current === undefined) {
-      return undefined;
-    }
-
-    current = (current as Record<string, unknown>)[parts[index]];
-  }
-
-  return current;
-}
-
-function cloneBranch(value: unknown): Record<string, unknown> {
-  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
-    return { ...(value as Record<string, unknown>) };
-  }
-
-  return {};
-}
-
-export function view<T>(selectedLens: Lens, source: T | null | undefined): unknown {
+export function view<T>(selectedLens: Lens, obj: T | null | undefined): unknown {
+  if (!obj) return undefined;
+  
   if (!selectedLens.path) {
-    return source;
+    return obj;
   }
 
-  return getByPath(source, selectedLens.path);
+  const keys = selectedLens.path.split('.');
+  let result: unknown = obj;
+
+  for (let i = 0; i < keys.length; i++) {
+    if (result === null || result === undefined) return undefined;
+    result = (result as Record<string, unknown>)[keys[i]];
+  }
+
+  return result;
 }
 
 export function set<T extends Record<string, unknown>>(
   selectedLens: Lens,
   value: unknown,
-  source: T | null | undefined,
+  obj: T | null | undefined
 ): T {
-  const baseObject = cloneBranch(source) as T;
+  const base = (obj && typeof obj === 'object' && !Array.isArray(obj))
+    ? { ...obj }
+    : {} as T;
 
   if (!selectedLens.path) {
     return value as T;
   }
 
-  const parts = selectedLens.path.split('.');
-  let current: Record<string, unknown> = baseObject;
-  let sourceCursor: unknown = source;
+  const keys = selectedLens.path.split('.');
+  let current: Record<string, unknown> = base;
+  let sourceCursor: unknown = obj;
 
-  for (let index = 0; index < parts.length - 1; index += 1) {
-    const part = parts[index];
-    const sourceBranch = sourceCursor !== null && typeof sourceCursor === 'object'
-      ? (sourceCursor as Record<string, unknown>)[part]
-      : undefined;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
 
-    const nextBranch = cloneBranch(sourceBranch);
-    current[part] = nextBranch;
+    const sourceBranch =
+      sourceCursor && typeof sourceCursor === 'object'
+        ? (sourceCursor as Record<string, unknown>)[key]
+        : undefined;
+
+    const nextBranch =
+      sourceBranch && typeof sourceBranch === 'object' && !Array.isArray(sourceBranch)
+        ? { ...(sourceBranch as Record<string, unknown>) }
+        : {};
+
+    current[key] = nextBranch;
 
     current = nextBranch;
     sourceCursor = sourceBranch;
   }
 
-  current[parts[parts.length - 1]] = value;
+  current[keys[keys.length - 1]] = value;
 
-  return baseObject;
+  return base;
 }

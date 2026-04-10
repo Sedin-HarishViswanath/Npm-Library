@@ -5,7 +5,7 @@ export function every<T>(predicate: (item: T, index: number, array: T[]) => bool
 
   if (array.length === 0) {
     return true;
-  }
+  }//edge case for empty array
 
   for (let index = 0; index < array.length; index += 1) {
     if (!predicate(array[index], index, array)) {
