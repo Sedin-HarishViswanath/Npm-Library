@@ -1,14 +1,18 @@
 {
-  "name": "npm-library",
+  "name": "customfunctionlib",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "TypeScript utilities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "jest": "^30.3.0",
