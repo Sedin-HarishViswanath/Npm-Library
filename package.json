@@ -1,5 +1,5 @@
 {
-  "name": "customfunctionlib",
+  "name": "custom-ts-utils",
   "version": "1.0.0",
   "description": "TypeScript utilities",
   "main": "dist/index.js",
